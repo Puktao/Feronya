@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#102538"/>
+      <stop offset="100%" stop-color="#24435c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  
+        <circle cx="800" cy="420" r="190" fill="none" stroke="#d4b475" stroke-width="6" opacity="0.55"/>
+        <circle cx="800" cy="420" r="165" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.35"/>
+        
+  <text x="800" y="760" font-family="Georgia, serif" font-size="28" fill="#ffffff" opacity="0.65" text-anchor="middle" letter-spacing="6">HERO IMAGE 02 — REPLACE WITH LOBBY OR TERRACE</text>
+  <text x="800" y="795" font-family="sans-serif" font-size="13" fill="#d4b475" opacity="0.85" text-anchor="middle" letter-spacing="4">1600 x 900 RECOMMENDED</text>
+</svg>

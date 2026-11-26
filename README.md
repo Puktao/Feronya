@@ -1,27 +1,29 @@
-# Feronya Hotel — website redesign prototype
+# Boutique Hotel Website Template (The Maritime Hotel Layout)
 
-This is an independently written, responsive multi-page prototype using The Maritime Hotel as a visual direction reference and Feronya's hotel identity/content.
+Bu paket, **The Maritime Hotel** web sitesinin yerleşim düzeni, renk paleti, tipografisi ve rezervasyon çubuğu mimarisi referans alınarak hazırlanmış, tamamen özelleştirilebilir, sıfır bağımlılıklı (saf HTML5, CSS3 ve Vanilla JS) bir web sitesi şablonudur.
 
-## Pages
-- index.html — Home
-- rooms.html — Rooms & Suites
-- location.html — Location
-- gallery.html — Gallery
-- history.html — About / Story
-- meetings.html — Meetings & Events
-- dining.html — Restaurant & Bar
-- contact.html — Contact
-- accessibility.html — Accessibility
+## Klasör Yapısı
 
-## Preview
-Open `index.html` in a browser. Navigation works between all pages; the mobile menu is included.
+```text
+boutique-hotel-template/
+├── index.html          # Ana sayfa (Tam ekran hero slider, "Get A Room" rezervasyon barı, oda önizlemeleri)
+├── rooms.html          # Odalar ve Süitler sayfası
+├── location.html       # Konum ve Çevre rehberi
+├── gallery.html        # Fotoğraf galerisi
+├── history.html        # Tarihçe / Hikaye sayfası
+├── dining.html         # Restoran & Gece Hayatı sayfası
+├── accessibility.html  # Erişilebilirlik bildirimi
+├── policy.html         # Misafir ve iptal politikaları
+├── css/
+│   └── style.css       # Tüm tasarım, renk değişkenleri (:root) ve mobil uyumluluk kuralları
+├── js/
+│   └── main.js         # Slider kontrolü, tarih seçici ve rezervasyon penceresi mantığı
+└── assets/             # Kendi fotoğraflarınızla değiştireceğiniz görsel yer tutucular (.svg)
+```
 
-## Important before publishing
-- The photographs are temporary remote Unsplash placeholders, not official Feronya photography. Replace them with approved Feronya images.
-- The wordmark is a temporary text treatment. Replace it with the official Feronya logo file.
-- Confirm hotel facts, room details, meeting room information, policies, and contact details with the hotel.
-- The reference site's original source code, proprietary assets, and exact proprietary animations are not copied. This is a fresh implementation of a similar editorial hotel layout and visual language.
-- Images and Google Fonts require an internet connection.
+## Kendi Sitenize Nasıl Uyarlarsınız?
 
-## Handoff prompt for Claude Code
-Continue this project without changing the overall design direction. Use The Maritime Hotel (https://themaritimehotel.com/) as the visual reference for layout, typography, image-led sections, navigation, spacing, and responsive behavior. The Feronya site is a complete redesign, so do not reuse the old Feronya website's design. Keep Feronya's own brand, official logo, approved hotel photography, and verified hotel content. First inspect every page in this project, then refine the design to match the reference more closely page by page. Do not replace it with a generic hotel template. Preserve all nine pages and ensure all links and mobile navigation work.
+1. **Marka ve Metinler:** `index.html` ve diğer `.html` dosyalarındaki `THE MARITIME HOTEL` logosunu, adres/telefon bilgilerini ve oda açıklamalarını kendi markanızla değiştirin.
+2. **Renkler ve Yazı Tipleri:** `css/style.css` dosyasının en üstündeki `:root` bölümünden `--color-navy`, `--color-gold` ve `--color-ivory` renklerini kendi kurumsal kimliğinize göre güncelleyin.
+3. **Görseller:** `assets/` klasöründeki `.svg` yer tutucuların yerine kendi `.jpg` veya `.webp` fotoğraflarınızı koyup HTML/CSS içindeki dosya yollarını güncelleyin.
+4. **Rezervasyon Sistemi Bağlantısı:** `js/main.js` dosyasındaki `bookingForm` submit olayını kendi rezervasyon motorunuza (ör. Cloudbeds, HotelRunner, SynXis veya özel rezervasyon sayfanız) yönlendirebilirsiniz.
