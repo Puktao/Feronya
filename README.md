@@ -1,29 +1,24 @@
-# Boutique Hotel Website Template (The Maritime Hotel Layout)
+# Feronya Hotel Website Redesign — Prototype
 
-Bu paket, **The Maritime Hotel** web sitesinin yerleşim düzeni, renk paleti, tipografisi ve rezervasyon çubuğu mimarisi referans alınarak hazırlanmış, tamamen özelleştirilebilir, sıfır bağımlılıklı (saf HTML5, CSS3 ve Vanilla JS) bir web sitesi şablonudur.
+## Contents
+- `index.html` — complete responsive website prototype. HTML, CSS and JavaScript are included in this file.
 
-## Klasör Yapısı
+## Preview
+Open `index.html` in a modern browser.
 
-```text
-boutique-hotel-template/
-├── index.html          # Ana sayfa (Tam ekran hero slider, "Get A Room" rezervasyon barı, oda önizlemeleri)
-├── rooms.html          # Odalar ve Süitler sayfası
-├── location.html       # Konum ve Çevre rehberi
-├── gallery.html        # Fotoğraf galerisi
-├── history.html        # Tarihçe / Hikaye sayfası
-├── dining.html         # Restoran & Gece Hayatı sayfası
-├── accessibility.html  # Erişilebilirlik bildirimi
-├── policy.html         # Misafir ve iptal politikaları
-├── css/
-│   └── style.css       # Tüm tasarım, renk değişkenleri (:root) ve mobil uyumluluk kuralları
-├── js/
-│   └── main.js         # Slider kontrolü, tarih seçici ve rezervasyon penceresi mantığı
-└── assets/             # Kendi fotoğraflarınızla değiştireceğiniz görsel yer tutucular (.svg)
-```
+## Notes
+- This is a front-end prototype, not a deployed website.
+- The design uses image URLs hosted by Feronya's website and other remote image hosts; those images are not bundled locally.
+- Google Fonts are loaded remotely.
+- Booking and contact links point to the existing Feronya website/contact details.
+- The current prototype's wordmark is a text treatment, not the hotel's original logo artwork. Replace it with the approved original logo asset before production.
+- Verify all room, dining, meeting, contact, legal and booking information with the hotel before publishing.
 
-## Kendi Sitenize Nasıl Uyarlarsınız?
-
-1. **Marka ve Metinler:** `index.html` ve diğer `.html` dosyalarındaki `THE MARITIME HOTEL` logosunu, adres/telefon bilgilerini ve oda açıklamalarını kendi markanızla değiştirin.
-2. **Renkler ve Yazı Tipleri:** `css/style.css` dosyasının en üstündeki `:root` bölümünden `--color-navy`, `--color-gold` ve `--color-ivory` renklerini kendi kurumsal kimliğinize göre güncelleyin.
-3. **Görseller:** `assets/` klasöründeki `.svg` yer tutucuların yerine kendi `.jpg` veya `.webp` fotoğraflarınızı koyup HTML/CSS içindeki dosya yollarını güncelleyin.
-4. **Rezervasyon Sistemi Bağlantısı:** `js/main.js` dosyasındaki `bookingForm` submit olayını kendi rezervasyon motorunuza (ör. Cloudbeds, HotelRunner, SynXis veya özel rezervasyon sayfanız) yönlendirebilirsiniz.
+## Production checklist
+1. Insert the approved original logo file without altering its artwork or typography.
+2. Obtain permission and download approved hotel photography into a local `assets/` folder.
+3. Confirm all page copy, room details, amenities, policies and contact details.
+4. Connect the booking engine and test its date/guest parameters.
+5. Add required privacy, cookie and accessibility notices.
+6. Test on current mobile and desktop browsers.
+7. Configure hosting, domain, analytics and search metadata.
