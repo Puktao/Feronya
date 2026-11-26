@@ -137,6 +137,12 @@ go(0);start()})();
 .bk-search:hover:not(:disabled){background:var(--red,#e0341e)}
 .bk-search:disabled{background:#eef1f1;color:#a9b4b6;cursor:default}
 @media(max-width:600px){.bk-panel{left:0;right:0;top:auto;bottom:0;width:100%;max-height:92vh;max-height:92svh;transform:translateY(100%)}.bk-panel.show{transform:translateY(0)}.bk-body{padding:14px 16px 6px}.bk-foot{padding:12px 16px 18px}.bk-week,.bk-grid{gap:4px}.bk-day{font-size:15px}}
+
+/* Booking panel centered + rounded */
+.bk-panel{left:50%;right:auto;border-radius:14px;overflow:hidden;transform:translate(-50%,100vh)}
+.bk-panel.show{transform:translate(-50%,-50%)}
+@media(max-width:600px){.bk-panel{left:0;right:0;border-radius:16px 16px 0 0;transform:translateY(100%)}.bk-panel.show{transform:translateY(0)}}
+.bk-day{border-radius:6px}.bk-search{border-radius:8px}
 @media(prefers-reduced-motion:reduce){.bk-panel,.bk-backdrop{transition:none}}
 </style>
 <script>
