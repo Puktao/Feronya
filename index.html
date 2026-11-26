@@ -95,4 +95,112 @@ let x0=null;hero.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{pas
 hero.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){go(i-1);restart()}if(e.key==='ArrowRight'){go(i+1);restart()}});
 go(0);start()})();
 </script>
+<div class="bk-backdrop" id="bkBackdrop" hidden></div>
+<aside class="bk-panel" id="bkPanel" role="dialog" aria-modal="true" aria-labelledby="bkTitle" hidden>
+<div class="bk-head"><span class="bk-title" id="bkTitle">Booking</span><button class="bk-close" id="bkClose" type="button" aria-label="Close booking">&times;</button></div>
+<div class="bk-body">
+<div class="bk-month"><button class="bk-nav" id="bkPrev" type="button" aria-label="Previous month">&#8249;</button><span class="bk-month-name" id="bkMonth" aria-live="polite"></span><button class="bk-nav" id="bkNext" type="button" aria-label="Next month">&#8250;</button></div>
+<div class="bk-week" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+<div class="bk-grid" id="bkGrid" role="grid"></div>
+<p class="bk-summary" id="bkSummary">Select your check-in date.</p>
+<p class="bk-note" id="bkNote" hidden><span aria-hidden="true">&#9432;</span> <span id="bkSample">Sample prices. </span>Calendar prices shown for 1 night stay excluding taxes and fees.</p>
+</div>
+<div class="bk-foot"><button class="bk-search" id="bkSearch" type="button" disabled>Search</button></div>
+</aside>
+<style>
+.bk-backdrop{position:fixed;inset:0;z-index:60;background:rgba(2,20,24,.62);opacity:0;transition:opacity .35s ease}
+.bk-backdrop.show{opacity:1}
+.bk-panel{position:fixed;z-index:61;right:clamp(12px,2.5vw,36px);top:50%;width:min(460px,calc(100vw - 24px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;background:#fff;color:#16323a;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateY(100vh);transition:transform .45s cubic-bezier(.2,.8,.2,1);font-family:'DM Sans',sans-serif}
+.bk-panel.show{transform:translateY(-50%)}
+.bk-head{display:flex;align-items:center;justify-content:space-between;background:var(--teal,#044550);color:#fff;padding:18px 22px}
+.bk-title{font:400 22px 'Oswald',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.bk-close{background:none;border:0;color:#fff;font-size:34px;line-height:1;cursor:pointer;padding:0 4px}
+.bk-body{padding:18px 24px 8px;overflow:auto}
+.bk-month{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.bk-month-name{font:400 22px 'Oswald',sans-serif;letter-spacing:.02em}
+.bk-nav{background:none;border:0;font-size:30px;line-height:1;width:40px;height:40px;cursor:pointer;color:#16323a}
+.bk-nav:disabled{opacity:.25;cursor:default}
+.bk-week,.bk-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.bk-week span{text-align:center;font-size:13px;color:#5d6f73;padding:6px 0}
+.bk-day{aspect-ratio:1/1;border:0;background:#eef3f4;color:#16323a;font:500 16px 'DM Sans',sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:background .15s}
+.bk-day small{font-size:11px;letter-spacing:.04em;color:inherit;opacity:.85}
+.bk-day:hover:not(:disabled){background:#d4e4e7}
+.bk-day:disabled{background:#f7f8f8;color:#c3cbcd;cursor:default}
+.bk-day.in-range{background:#cfe2e5}
+.bk-day.sel,.bk-day.sel:hover:not(:disabled){background:var(--red,#e0341e);color:#fff}
+.bk-day:focus-visible,.bk-nav:focus-visible,.bk-close:focus-visible,.bk-search:focus-visible{outline:3px solid var(--red,#e0341e);outline-offset:2px}
+.bk-empty{aspect-ratio:1/1}
+.bk-summary{margin:14px 0 4px;font-size:14px;color:#16323a;min-height:20px}
+.bk-note{margin:6px 0 4px;font-size:13px;color:#5d6f73}
+.bk-foot{padding:14px 24px 22px;border-top:1px solid #edf0f0}
+.bk-search{width:100%;padding:17px;border:0;background:var(--teal,#044550);color:#fff;font:400 18px 'Oswald',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.bk-search:hover:not(:disabled){background:var(--red,#e0341e)}
+.bk-search:disabled{background:#eef1f1;color:#a9b4b6;cursor:default}
+@media(max-width:600px){.bk-panel{left:0;right:0;top:auto;bottom:0;width:100%;max-height:92vh;max-height:92svh;transform:translateY(100%)}.bk-panel.show{transform:translateY(0)}.bk-body{padding:14px 16px 6px}.bk-foot{padding:12px 16px 18px}.bk-week,.bk-grid{gap:4px}.bk-day{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.bk-panel,.bk-backdrop{transition:none}}
+</style>
+<script>
+(()=>{
+// ===== PRICE CONFIG =====
+// Nightly prices shown under each date, as 'YYYY-MM-DD': 'text', e.g. '2026-12-24': '€120'.
+// Replace with the channel manager feed later. While USE_SAMPLE_PRICES is true,
+// placeholder prices are generated and the panel is labelled "Sample prices".
+const USE_SAMPLE_PRICES=true;
+const SAMPLE={weekday:'€95',weekend:'€115',days:365}; // weekend = Friday & Saturday nights
+const PRICES={};
+if(USE_SAMPLE_PRICES){const d=new Date();d.setHours(0,0,0,0);for(let i=0;i<SAMPLE.days;i++){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()+i);const k=x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');PRICES[k]=(x.getDay()===5||x.getDay()===6)?SAMPLE.weekend:SAMPLE.weekday}}
+// ===== END PRICE CONFIG =====
+const BOOKING_URL='https://www.feronya.com/en/booking';
+const panel=document.getElementById('bkPanel'),back=document.getElementById('bkBackdrop'),grid=document.getElementById('bkGrid'),monthEl=document.getElementById('bkMonth'),prev=document.getElementById('bkPrev'),next=document.getElementById('bkNext'),summary=document.getElementById('bkSummary'),search=document.getElementById('bkSearch'),note=document.getElementById('bkNote');
+const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const pad=n=>String(n).padStart(2,'0'),key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const today=new Date();today.setHours(0,0,0,0);
+let view=new Date(today.getFullYear(),today.getMonth(),1),checkIn=null,checkOut=null,lastTrigger=null;
+note.hidden=Object.keys(PRICES).length===0;document.getElementById('bkSample').hidden=!USE_SAMPLE_PRICES;
+const fmt=d=>d.getDate()+' '+months[d.getMonth()].slice(0,3)+' '+d.getFullYear();
+function render(){
+  monthEl.textContent=months[view.getMonth()]+' '+view.getFullYear();
+  prev.disabled=view<=new Date(today.getFullYear(),today.getMonth(),1);
+  grid.innerHTML='';
+  for(let i=0;i<view.getDay();i++){const e=document.createElement('span');e.className='bk-empty';grid.appendChild(e)}
+  const days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+  for(let n=1;n<=days;n++){
+    const d=new Date(view.getFullYear(),view.getMonth(),n),k=key(d),b=document.createElement('button');
+    b.type='button';b.className='bk-day';b.dataset.date=k;b.innerHTML='<span>'+n+'</span>'+(PRICES[k]?'<small>'+PRICES[k]+'</small>':'');
+    b.setAttribute('aria-label',fmt(d)+(PRICES[k]?', '+PRICES[k]:''));
+    if(d<today)b.disabled=true;
+    if((checkIn&&+d===+checkIn)||(checkOut&&+d===+checkOut)){b.classList.add('sel');b.setAttribute('aria-pressed','true')}
+    else if(checkIn&&checkOut&&d>checkIn&&d<checkOut)b.classList.add('in-range');
+    b.addEventListener('click',()=>pick(d));grid.appendChild(b);
+  }
+  if(!checkIn)summary.textContent='Select your check-in date.';
+  else if(!checkOut)summary.textContent='Check-in '+fmt(checkIn)+' · select your check-out date.';
+  else{const nights=Math.round((checkOut-checkIn)/864e5);summary.textContent=fmt(checkIn)+' – '+fmt(checkOut)+' · '+nights+' night'+(nights>1?'s':'')}
+  search.disabled=!(checkIn&&checkOut);
+}
+function pick(d){
+  if(!checkIn||checkOut||d<=checkIn){checkIn=d;checkOut=null}else{checkOut=d}
+  render();const f=grid.querySelector('[data-date="'+key(d)+'"]');f&&f.focus();
+}
+prev.addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render()});
+next.addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render()});
+search.addEventListener('click',()=>{window.open(BOOKING_URL,'_blank','noopener')});
+function open(e){
+  if(e){e.preventDefault();lastTrigger=e.currentTarget}
+  const m=document.getElementById('menuPanel');if(m&&!m.hidden)document.getElementById('menu').click();
+  panel.hidden=false;back.hidden=false;document.body.classList.add('menu-open');render();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{panel.classList.add('show');back.classList.add('show')}));
+  setTimeout(()=>document.getElementById('bkClose').focus(),50);
+}
+function close(){
+  if(panel.hidden)return;panel.classList.remove('show');back.classList.remove('show');document.body.classList.remove('menu-open');
+  setTimeout(()=>{panel.hidden=true;back.hidden=true},450);lastTrigger&&lastTrigger.focus();
+}
+document.querySelectorAll('a[href="'+BOOKING_URL+'"]').forEach(a=>a.addEventListener('click',open));
+document.getElementById('bkClose').addEventListener('click',close);back.addEventListener('click',close);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){e.stopPropagation();close()}
+  if(e.key==='Tab'&&!panel.hidden){const f=[...panel.querySelectorAll('button:not(:disabled)')];if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+})();
+</script>
+
 </body></html>
