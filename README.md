@@ -1,25 +1,27 @@
-# Feronya Hotel — multi-page redesign preview
+# Feronya Hotel — website redesign prototype
 
-This is an independently coded design concept inspired by the editorial, image-led structure and simple navigation of The Maritime Hotel website. It is not a byte-for-byte copy. It uses Feronya-specific information and image URLs from Feronya’s current public website.
+This is an independently written, responsive multi-page prototype using The Maritime Hotel as a visual direction reference and Feronya's hotel identity/content.
 
 ## Pages
 - index.html — Home
-- rooms.html — Rooms & suites
-- location.html — Location and map
+- rooms.html — Rooms & Suites
+- location.html — Location
 - gallery.html — Gallery
-- history.html — History / About
-- meetings.html — Meeting rooms and capacity table
-- dining.html — Restaurant & bar
-- contact.html — Contact details and map
-- accessibility.html — Accessibility information
+- history.html — About / Story
+- meetings.html — Meetings & Events
+- dining.html — Restaurant & Bar
+- contact.html — Contact
+- accessibility.html — Accessibility
 
 ## Preview
-Open `index.html` in a modern browser. Navigation links connect the pages. The image assets are loaded from `www.feronya.com`; an internet connection is required.
+Open `index.html` in a browser. Navigation works between all pages; the mobile menu is included.
 
-## Before production
-- Confirm image use and download/host approved image files locally.
-- The booking form opens Feronya’s booking page (https://www.feronya.com/en/booking); dates are not passed through yet.
-- Confirm all room, amenity, accessibility and meeting information with the hotel.
-- Add approved privacy, cookie, legal and language pages; configure hosting, SEO, analytics and form security.
+## Important before publishing
+- The photographs are temporary remote Unsplash placeholders, not official Feronya photography. Replace them with approved Feronya images.
+- The wordmark is a temporary text treatment. Replace it with the official Feronya logo file.
+- Confirm hotel facts, room details, meeting room information, policies, and contact details with the hotel.
+- The reference site's original source code, proprietary assets, and exact proprietary animations are not copied. This is a fresh implementation of a similar editorial hotel layout and visual language.
+- Images and Google Fonts require an internet connection.
 
-Live preview: https://puktao.github.io/Feronya/ (GitHub Pages, `feronya` branch).
+## Handoff prompt for Claude Code
+Continue this project without changing the overall design direction. Use The Maritime Hotel (https://themaritimehotel.com/) as the visual reference for layout, typography, image-led sections, navigation, spacing, and responsive behavior. The Feronya site is a complete redesign, so do not reuse the old Feronya website's design. Keep Feronya's own brand, official logo, approved hotel photography, and verified hotel content. First inspect every page in this project, then refine the design to match the reference more closely page by page. Do not replace it with a generic hotel template. Preserve all nine pages and ensure all links and mobile navigation work.
