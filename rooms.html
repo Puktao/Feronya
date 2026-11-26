@@ -79,8 +79,6 @@ body.menu-open{overflow:hidden}[id]{scroll-margin-top:140px}@media(max-width:760
 <main class="rm" id="rooms">
 <section class="rm-stage" aria-roledescription="carousel" aria-label="Room photos">
 <ul class="rm-slides" id="rmSlides"></ul>
-<button class="rm-nav rm-prev" id="rmPrev" type="button" aria-label="Previous photo">Prev</button>
-<button class="rm-nav rm-next" id="rmNext" type="button" aria-label="Next photo">Next</button>
 <div class="rm-dots" id="rmDots" role="group" aria-label="Choose photo"></div>
 </section>
 <aside class="rm-side">
@@ -114,7 +112,7 @@ body.menu-open{overflow:hidden}[id]{scroll-margin-top:140px}@media(max-width:760
 .rm-draft{margin:22px 0 0;font-size:12px;color:#9fc3c8;font-style:italic}
 .rm-nav:focus-visible,.rm-types button:focus-visible,.rm-dots button:focus-visible{outline:3px solid var(--red,#e0341e);outline-offset:2px}
 @media(max-width:1000px){.rm{grid-template-columns:1fr 280px}.rm-types button{font-size:20px}}
-@media(max-width:760px){.rm{display:block;height:auto;min-height:0}.rm-stage{height:56svh;min-height:300px}.rm-nav{width:56px;height:56px;font-size:11px}.rm-dots{bottom:16px}.rm-ph{font-size:15px;padding:20px 84px}.rm-side{padding:18px 0 28px}.rm-types{display:flex;overflow-x:auto;gap:0;margin-bottom:12px;scrollbar-width:none}.rm-types li{flex:none}.rm-types button{font-size:17px;padding:10px 16px;white-space:nowrap}.rm-info,.rm-heading{padding:0 18px;margin-left:0}}
+@media(max-width:760px){.rm{display:block;height:auto;min-height:0}.rm-stage{height:56svh;min-height:300px}.rm-nav{width:56px;height:56px;font-size:11px}.rm-dots{bottom:16px}.rm-ph{font-size:15px;padding:20px}.rm-side{padding:18px 0 28px}.rm-types{display:flex;overflow-x:auto;gap:0;margin-bottom:12px;scrollbar-width:none}.rm-types li{flex:none}.rm-types button{font-size:17px;padding:10px 16px;white-space:nowrap}.rm-info,.rm-heading{padding:0 18px;margin-left:0}}
 @media(prefers-reduced-motion:reduce){.rm-slide{transition:none}}
 </style>
 <script>
@@ -150,7 +148,7 @@ function selectRoom(k){room=k;i=0;const r=ROOMS[k];
  go(0);restart()}
 function go(n){const s=slidesEl.children;if(!s.length)return;s[i]&&s[i].classList.remove('active');i=(n+s.length)%s.length;s[i].classList.add('active');[...dotsEl.children].forEach((d,j)=>d.setAttribute('aria-current',j===i))}
 function start(){if(!reduce&&!timer)timer=setInterval(()=>go(i+1),5000)}function stop(){clearInterval(timer);timer=null}function restart(){stop();start()}
-document.getElementById('rmPrev').addEventListener('click',()=>{go(i-1);restart()});document.getElementById('rmNext').addEventListener('click',()=>{go(i+1);restart()});
+
 stage.addEventListener('mouseenter',stop);stage.addEventListener('mouseleave',start);
 let x0=null;stage.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});stage.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50){go(dx<0?i+1:i-1);restart()}x0=null});
 document.addEventListener('keydown',e=>{if(document.getElementById('bkPanel')&&!document.getElementById('bkPanel').hidden)return;if(e.key==='ArrowLeft'){go(i-1);restart()}if(e.key==='ArrowRight'){go(i+1);restart()}});
