@@ -110,6 +110,7 @@ body.menu-open{overflow:hidden}[id]{scroll-margin-top:140px}@media(max-width:760
 <li><a href="location.html">Location</a></li>
 <li><a href="story.html" aria-current="page">Our Story</a></li>
 <li><a class="menu-book" href="https://www.feronya.com/en/booking" target="_blank" rel="noopener">Book Now</a><div class="menu-social">
+<a href="mailto:feronya@feronya.com" aria-label="E-mail Feronya Hotel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.8 6.5 12 13l8.2-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></a>
 <a href="https://www.facebook.com/feronyahotel/" target="_blank" rel="noopener" aria-label="Feronya Hotel on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8.2h2.8l.4-3.3h-3.2V8.4c0-.9.3-1.6 1.6-1.6h1.7V3.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.5H7.4v3.3h2.8V22z"/></svg></a>
 <a href="https://www.linkedin.com/company/feronya-hotel/" target="_blank" rel="noopener" aria-label="Feronya Hotel on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3.3 8.8h3.9V21H3.3zM5.2 2.8a2.2 2.2 0 1 1 0 4.5 2.2 2.2 0 0 1 0-4.5zM9.6 8.8h3.7v1.7c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-3.9v-5.8c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V21H9.6z"/></svg></a>
 <a href="https://www.instagram.com/feronyahotel/" target="_blank" rel="noopener" aria-label="Feronya Hotel on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a>
@@ -261,4 +262,121 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){e.st
 })();
 </script>
 
+<!-- Contact form panel -->
+<div class="cf-backdrop" id="cfBackdrop" hidden></div>
+<aside class="cf-panel" id="cfPanel" role="dialog" aria-modal="true" aria-labelledby="cfTitle" hidden>
+<div class="cf-head"><span class="cf-title" id="cfTitle">Contact us</span><button class="cf-close" id="cfClose" type="button" aria-label="Close contact form">&times;</button></div>
+<form class="cf-form" id="cfForm" novalidate>
+<div class="cf-body">
+<p class="cf-lead">Send us a message and our team will get back to you within 24 hours.</p>
+<div class="cf-row">
+<label class="cf-field"><span>Full name *</span><input name="name" type="text" autocomplete="name" required></label>
+</div>
+<div class="cf-row cf-two">
+<label class="cf-field"><span>E-mail *</span><input name="email" type="email" autocomplete="email" required></label>
+<label class="cf-field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" placeholder="+90"></label>
+</div>
+<fieldset class="cf-topics"><legend>Subject *</legend>
+<label><input type="radio" name="topic" value="Reservation" checked><span>Reservation</span></label>
+<label><input type="radio" name="topic" value="Meetings &amp; events"><span>Meetings</span></label>
+<label><input type="radio" name="topic" value="Restaurant &amp; bar"><span>Restaurant</span></label>
+<label><input type="radio" name="topic" value="General enquiry"><span>General</span></label>
+</fieldset>
+<div class="cf-row cf-two" id="cfDates">
+<label class="cf-field"><span>Arrival</span><input name="arrival" type="date"></label>
+<label class="cf-field"><span>Departure</span><input name="departure" type="date"></label>
+</div>
+<div class="cf-row cf-two" id="cfGuestsRow">
+<label class="cf-field"><span>Guests</span><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option></select></label>
+<label class="cf-field"><span>Preferred reply</span><select name="reply"><option>E-mail</option><option>Phone</option><option>WhatsApp</option></select></label>
+</div>
+<label class="cf-field"><span>Message *</span><textarea name="message" rows="4" required></textarea></label>
+<label class="cf-consent"><input type="checkbox" name="consent" required><span>I agree that Feronya Hotel may process my personal data to answer this request (KVKK / GDPR).</span></label>
+<p class="cf-error" id="cfError" role="alert" hidden></p>
+</div>
+<div class="cf-foot"><button class="cf-send" type="submit">Send message</button></div>
+</form>
+<div class="cf-done" id="cfDone" hidden><p class="cf-done-t" id="cfDoneT">Thank you</p><p id="cfDoneMsg">Your message has been sent. We will get back to you shortly.</p></div>
+</aside>
+<style>
+.cf-backdrop{position:fixed;inset:0;z-index:60;background:rgba(2,20,24,.62);opacity:0;transition:opacity .35s ease}
+.cf-backdrop.show{opacity:1}
+.cf-panel{position:fixed;z-index:61;left:50%;top:50%;width:min(520px,calc(100vw - 24px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;background:#F5F2EA;color:#1C2B24;box-shadow:0 30px 80px rgba(0,0,0,.35);border-radius:14px;overflow:hidden;transform:translate(-50%,100vh);transition:transform .45s cubic-bezier(.2,.8,.2,1);font-family:'Fjalla One',sans-serif}
+.cf-panel.show{transform:translate(-50%,-50%)}
+.cf-head{display:flex;align-items:center;justify-content:space-between;background:var(--teal,#23372E);color:#fff;padding:18px 22px;flex:none}
+.cf-title{font-size:22px;letter-spacing:.08em;text-transform:uppercase}
+.cf-close{background:none;border:0;color:#fff;font-size:34px;line-height:1;cursor:pointer;padding:0 4px}
+.cf-form{display:flex;flex-direction:column;min-height:0;flex:1}
+.cf-body{padding:18px 24px 8px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.cf-lead{margin:0;font-size:14px;color:#5F6B62;letter-spacing:.02em}
+.cf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cf-field{display:flex;flex-direction:column;gap:5px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#5F6B62}
+.cf-field input,.cf-field select,.cf-field textarea{font:15px 'Fjalla One',sans-serif;letter-spacing:.02em;color:#1C2B24;background:#fff;border:1px solid #DCE3D7;border-radius:8px;padding:11px 12px;width:100%;text-transform:none;transition:border-color .15s,box-shadow .15s}
+.cf-field textarea{resize:vertical;min-height:96px}
+.cf-field input:focus,.cf-field select:focus,.cf-field textarea:focus{outline:0;border-color:#23372E;box-shadow:0 0 0 3px rgba(201,164,106,.35)}
+.cf-field .bad{border-color:#B3261E}
+.cf-topics{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cf-topics legend{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#5F6B62;margin-bottom:6px;padding:0}
+.cf-topics label{cursor:pointer}
+.cf-topics input{position:absolute;opacity:0;pointer-events:none}
+.cf-topics span{display:inline-block;padding:8px 14px;border:1px solid #DCE3D7;border-radius:999px;background:#fff;font-size:14px;letter-spacing:.04em;transition:.15s}
+.cf-topics input:checked+span{background:#23372E;border-color:#23372E;color:#fff}
+.cf-topics input:focus-visible+span{outline:3px solid #7A5C2E;outline-offset:2px}
+.cf-consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#5F6B62;letter-spacing:.02em;line-height:1.4;cursor:pointer}
+.cf-consent input{width:18px;height:18px;margin:1px 0 0;accent-color:#23372E;flex:none}
+.cf-error{margin:0;font-size:13px;color:#B3261E}
+.cf-foot{padding:14px 24px 22px;border-top:1px solid #E6EBE3;flex:none}
+.cf-send{width:100%;padding:16px;border:0;border-radius:8px;background:var(--teal,#23372E);color:#fff;font:18px 'Fjalla One',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.cf-send:hover{background:var(--red,#C9A46A);color:#23372E}
+.cf-close:focus-visible,.cf-send:focus-visible{outline:3px solid var(--red-ink,#7A5C2E);outline-offset:2px}
+.cf-done{padding:40px 28px 44px;text-align:center}
+.cf-done-t{margin:0 0 10px;font-size:28px;letter-spacing:.06em;text-transform:uppercase;color:#23372E}
+.cf-done p{margin:0;font-size:15px;color:#5F6B62;letter-spacing:.02em;line-height:1.5}
+@media(max-width:600px){.cf-panel{left:0;right:0;top:auto;bottom:0;width:100%;max-height:92vh;max-height:92svh;border-radius:16px 16px 0 0;transform:translateY(100%)}.cf-panel.show{transform:translateY(0)}.cf-body{padding:14px 16px 6px}.cf-foot{padding:12px 16px 18px}.cf-two{gap:10px}}
+@media(max-width:600px){.cf-topics{gap:6px}.cf-topics span{padding:7px 11px;font-size:13px}}@media(max-width:360px){.cf-two{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.cf-panel,.cf-backdrop{transition:none}}
+</style>
+<script>
+(()=>{
+// ===== CONTACT FORM CONFIG =====
+// Sending is not active yet. To turn it on, set FORM_ENDPOINT to a form service URL
+// (e.g. 'https://formspree.io/f/xxxxxxx'); the form then POSTs JSON there.
+// HOTEL_EMAIL is shown in the error text and used to find the header E-mail links.
+const HOTEL_EMAIL='feronya@feronya.com';
+const FORM_ENDPOINT='';
+const panel=document.getElementById('cfPanel'),back=document.getElementById('cfBackdrop'),form=document.getElementById('cfForm'),err=document.getElementById('cfError'),done=document.getElementById('cfDone'),dates=document.getElementById('cfDates'),guests=document.getElementById('cfGuestsRow');
+let last=null;
+const today=new Date().toISOString().slice(0,10);form.arrival.min=today;form.departure.min=today;
+form.arrival.addEventListener('change',()=>{form.departure.min=form.arrival.value||today;if(form.departure.value&&form.departure.value<=form.arrival.value)form.departure.value=''});
+function topicUI(){const t=form.topic.value;dates.hidden=!(t==='Reservation'||t==='Meetings & events');guests.querySelector('label').hidden=t!=='Reservation'}
+form.querySelectorAll('input[name=topic]').forEach(r=>r.addEventListener('change',topicUI));topicUI();
+function open(e){if(e){e.preventDefault();last=e.currentTarget}
+  const m=document.getElementById('menuPanel');if(m&&!m.hidden){const b=document.getElementById('menu');b&&b.click()}
+  form.hidden=false;done.hidden=true;err.hidden=true;
+  panel.hidden=false;back.hidden=false;document.body.classList.add('menu-open');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{panel.classList.add('show');back.classList.add('show')}));
+  setTimeout(()=>form.name.focus(),80)}
+function close(){if(panel.hidden)return;panel.classList.remove('show');back.classList.remove('show');document.body.classList.remove('menu-open');setTimeout(()=>{panel.hidden=true;back.hidden=true},450);last&&last.focus()}
+document.querySelectorAll('a[href^="mailto:'+HOTEL_EMAIL+'"]').forEach(a=>a.addEventListener('click',open));
+document.getElementById('cfClose').addEventListener('click',close);back.addEventListener('click',close);
+document.addEventListener('keydown',e=>{if(panel.hidden)return;if(e.key==='Escape'){e.stopPropagation();close()}
+  if(e.key==='Tab'){const f=[...panel.querySelectorAll('button,input:not([type=radio]),input[type=radio]:checked,select,textarea')].filter(x=>!x.disabled&&x.offsetParent);if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+function fail(msg,el){err.textContent=msg;err.hidden=false;if(el){el.classList.add('bad');el.focus();el.addEventListener('input',()=>el.classList.remove('bad'),{once:true})}}
+form.addEventListener('submit',async e=>{e.preventDefault();err.hidden=true;
+  const f=form,v=n=>(f[n].value||'').trim();
+  if(!v('name'))return fail('Please enter your full name.',f.name);
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email')))return fail('Please enter a valid e-mail address.',f.email);
+  if(!v('message'))return fail('Please write a short message.',f.message);
+  if(!f.consent.checked)return fail('Please confirm the data processing consent.',null);
+  const t=f.topic.value,lines=['Name: '+v('name'),'E-mail: '+v('email')];
+  if(v('phone'))lines.push('Phone: '+v('phone'));lines.push('Subject: '+t);
+  if(!dates.hidden&&(v('arrival')||v('departure')))lines.push('Dates: '+(v('arrival')||'?')+' to '+(v('departure')||'?'));
+  if(t==='Reservation')lines.push('Guests: '+f.guests.value);
+  lines.push('Preferred reply: '+f.reply.value,'','Message:',v('message'));
+  const subject='Website enquiry: '+t+' ('+v('name')+')';
+  if(FORM_ENDPOINT){try{const r=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:subject,_replyto:v('email'),message:lines.join('\n')})});if(!r.ok)throw 0;document.getElementById('cfDoneMsg').textContent='Your message has been sent. We will get back to you shortly.'}catch(_){return fail('Sending failed. Please try again or write to '+HOTEL_EMAIL+'.',null)}}
+  else{document.getElementById('cfDoneT').textContent='Coming soon';document.getElementById('cfDoneMsg').textContent='Online sending is not active yet. Your message was not sent.';form.hidden=true;done.hidden=false;return}
+  form.hidden=true;done.hidden=false;f.reset();topicUI()});
+})();
+</script>
 </body></html>
