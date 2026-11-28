@@ -166,7 +166,7 @@ const box=document.getElementById('galSlides'),dots=document.getElementById('gal
 const imgs=()=>[...box.children],btns=()=>[...dots.children];
 function show(i){const s=imgs(),d=btns();if(!s.length){if(!gal.querySelector('.gal-empty'))gal.insertAdjacentHTML('beforeend','<div class="gal-empty">Photos coming soon</div>');return}
  cur=(i+s.length)%s.length;s.forEach((x,k)=>x.classList.toggle('active',k===cur));d.forEach((x,k)=>x.setAttribute('aria-current',k===cur))}
-function restart(){clearInterval(timer);timer=setInterval(()=>show(cur+1),6000)}
+function restart(){clearInterval(timer);timer=setInterval(()=>show(cur+1),5000)}
 function go(i){show(i);restart()}
 GALLERY.forEach((it,k)=>{const im=document.createElement('img');im.src=it.src;im.alt=it.caption;im.loading=k<2?'eager':'lazy';
  const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Photo '+(k+1)+': '+it.caption);
